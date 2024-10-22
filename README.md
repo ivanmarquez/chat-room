@@ -84,7 +84,7 @@ VUE_APP_SOCKET_URL=http://localhost:5001/socket
 2. **Run the application using Docker**:
 
    ```bash
-   docker-compose up --build
+    docker-compose build --no-cache
    ```
 
    This will start the frontend, backend, and MongoDB containers.
