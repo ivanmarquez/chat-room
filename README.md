@@ -78,7 +78,7 @@ VUE_APP_SOCKET_URL=http://localhost:5001/socket
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/yourusername/chat-room.git
+   git clone https://github.com/ivanmarquez/chat-room.git
    cd chat-room
    ```
 
