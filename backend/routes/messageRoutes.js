@@ -27,13 +27,17 @@ const router = express.Router();
  *             properties:
  *               sender:
  *                 type: string
- *               receiver:
+ *               recipient:
  *                 type: string
- *               content:
+ *               text:
+ *                 type: string
+ *               fileUrl:
  *                 type: string
  *     responses:
  *       201:
  *         description: Message sent successfully
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error
  */
@@ -53,12 +57,44 @@ router.post('/', authMiddleware, saveMessage);
  *         schema:
  *           type: string
  *       - in: query
- *         name: receiver
+ *         name: recipient
  *         schema:
  *           type: string
  *     responses:
  *       200:
  *         description: List of messages
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   text:
+ *                     type: string
+ *                   fileUrl:
+ *                     type: string
+ *                   timestamp:
+ *                     type: string
+ *                     format: date-time
+ *                   sender:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       username:
+ *                         type: string
+ *                   recipient:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       username:
+ *                         type: string
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error
  */

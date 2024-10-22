@@ -7,34 +7,48 @@ const router = express.Router();
  * @swagger
  * tags:
  *   name: Users
- *   description: User endpoints
+ *   description: User management and retrieval
  */
 
 /**
  * @swagger
  * /api/users:
  *   get:
- *     summary: Get all users
+ *     summary: Retrieve a list of users
  *     tags: [Users]
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: List of users
+ *         description: A list of users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     description: The user ID
+ *                     example: 60d0fe4f5311236168a109ca
+ *                   username:
+ *                     type: string
+ *                     description: The user's username
+ *                     example: johndoe
+ *                   token:
+ *                     type: string
+ *                     description: The user's token
+ *                     example: abc123
  *       500:
  *         description: Internal server error
  */
 router.get('/', authMiddleware, getUsers);
 
-
 /**
  * @swagger
- * /connected-users:
+ * /api/users/connected:
  *   get:
- *     summary: Get connected users
- *     description: Retrieve a list of users currently connected to the chat room.
- *     tags:
- *       - Users
+ *     summary: Retrieve a list of connected users
+ *     tags: [Users]
  *     responses:
  *       200:
  *         description: A list of connected users
@@ -46,11 +60,15 @@ router.get('/', authMiddleware, getUsers);
  *                 type: object
  *                 properties:
  *                   id:
- *                     type: integer
- *                     example: 1
- *                   name:
  *                     type: string
- *                     example: "Usuario 1"
+ *                     description: The user ID
+ *                     example: 60d0fe4f5311236168a109ca
+ *                   username:
+ *                     type: string
+ *                     description: The user's username
+ *                     example: johndoe
+ *       500:
+ *         description: Internal server error
  */
 router.get('/connected-users', getConnectedUsers);
 

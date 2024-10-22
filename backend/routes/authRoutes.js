@@ -4,9 +4,16 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Auth
+ *   description: Authentication management
+ */
+
+/**
+ * @swagger
  * /api/auth/login:
  *   post:
- *     summary: Login a user
+ *     summary: Log in a user
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -17,15 +24,34 @@ const router = express.Router();
  *             properties:
  *               username:
  *                 type: string
- *               password:
+ *                 description: The user's username
+ *                 example: johndoe
+ *               token:
  *                 type: string
+ *                 description: The user's token (optional)
+ *                 example: abc123
  *     responses:
  *       200:
  *         description: User logged in successfully
- *       404:
- *         description: User not found
- *       400:
- *         description: Invalid credentials
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The user ID
+ *                   example: 60d0fe4f5311236168a109ca
+ *                 username:
+ *                   type: string
+ *                   description: The user's username
+ *                   example: johndoe
+ *                 token:
+ *                   type: string
+ *                   description: The user's token
+ *                   example: abc123
+ *       401:
+ *         description: Invalid token
  *       500:
  *         description: Internal server error
  */
@@ -33,12 +59,28 @@ router.post("/login", login);
 
 /**
  * @swagger
- * /api/logout:
+ * /api/auth/logout:
  *   post:
- *     summary: Logout user
- *     description: Logout the current user and end the session.
- *     tags:
- *       - Authentication
+ *     summary: Log out a user
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     description: The user ID
+ *                     example: 60d0fe4f5311236168a109ca
+ *                   username:
+ *                     type: string
+ *                     description: The user's username
+ *                     example: johndoe
  *     responses:
  *       200:
  *         description: User logged out successfully
@@ -49,7 +91,10 @@ router.post("/login", login);
  *               properties:
  *                 message:
  *                   type: string
+ *                   description: Success message
  *                   example: User logged out successfully
+ *       500:
+ *         description: Internal server error
  */
 router.post("/logout", logout);
 

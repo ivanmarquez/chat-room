@@ -5,7 +5,7 @@ const { uploadFile } = require("../controllers/fileController");
 
 /**
  * @swagger
- * /upload:
+ * /api/files/upload:
  *   post:
  *     summary: Upload a file
  *     tags: 
@@ -23,8 +23,24 @@ const { uploadFile } = require("../controllers/fileController");
  *     responses:
  *       200:
  *         description: File uploaded successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 fileUrl:
+ *                   type: string
+ *                   example: "http://localhost:3000/uploads/testfile.png"
  *       400:
- *         description: Bad request
+ *         description: No file uploaded
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "No file uploaded"
  *       500:
  *         description: Internal server error
  */
