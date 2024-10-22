@@ -18,7 +18,7 @@ io.on("connection", (socket) => {
 	console.log("a user connected");
 
 	socket.on("userConnected", (user) => {
-		addUser(user);
+		//addUser(user);
 		io.emit("updateUsers", getConnectedUsersList());
 	});
 

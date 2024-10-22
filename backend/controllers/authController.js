@@ -47,7 +47,7 @@ exports.login = async (req, res) => {
 
 		// Add the user to the connected users list
 		user = { id: user._id, username: user.username, token: newToken };
-		//addUser(user);
+		addUser(user);
 
 		res.json(user);
 	} catch (error) {
