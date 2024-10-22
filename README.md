@@ -171,7 +171,7 @@ You can view the automatically generated API documentation using Swagger by visi
 ### Available Scripts
 
 - `npm start`: Starts the backend server.
-- `npm test`: Runs backend tests.
+- `npx jest`: Runs backend tests.
 
 ### Dependencies
 
@@ -232,7 +232,7 @@ Unit and integration tests are written for the backend.
 2. **Run the tests**:
 
    ```bash
-   npm test
+   npx jest
    ```
 
    This will execute all the tests in the `__tests__` directory.
