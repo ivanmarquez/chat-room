@@ -25,7 +25,7 @@ frontend/build/
 
 # Docker
 docker-compose.override.yml
-Dockerfile
+#Dockerfile
 
 # VS Code
 .vscode/
