@@ -88,7 +88,7 @@ const store = createStore({
 		},
 	},
 	actions: {
-		async login({ commit, getters, dispatch }, username) {
+		async login({ commit, getters }, username) {
 			try {
 				//const token = localStorage.getItem("token");
                 const token = getters.getToken;
@@ -121,7 +121,7 @@ const store = createStore({
 				commit("resetSearchMessagesResults");
 
 				socket.emit("userConnected", user);
-				await dispatch("fetchConnectedUsers");
+				//await dispatch("fetchConnectedUsers");
 
 				return true;
 			} catch (error) {
@@ -130,7 +130,7 @@ const store = createStore({
 			}
 		},
 
-		async logout({ commit, dispatch }) {
+		async logout({ commit }) {
 			try {
 				const user = this.state.user;
 				await axios.post(`${process.env.VUE_APP_API_URL}/auth/logout`, {
@@ -152,26 +152,22 @@ const store = createStore({
 
 				socket.emit("userDisconnected", user);
 
-				dispatch("fetchConnectedUsers");
+				//dispatch("fetchConnectedUsers");
 			} catch (error) {
 				console.error("Error logging out:", error);
 			}
 		},
 
-		async fetchConnectedUsers({ commit }) {
+		/* async fetchConnectedUsers({ commit }) {
 			try {
 				const response = await axios.get(
 					`${process.env.VUE_APP_API_URL}/users/connected-users`
 				);
 				commit("setConnectedUsers", response.data);
-
-				socket.on("updateUsers", (users) => {
-					store.commit("setConnectedUsers", users);
-				});
 			} catch (error) {
 				console.error("Error fetching connected users:", error);
 			}
-		},
+		}, */
 
 		async selectUser({ commit, dispatch }, user) {
 			commit("setSelectedUser", user);
@@ -355,6 +351,10 @@ const store = createStore({
 		},
 	},
 	plugins: [createPersistedState()],
+});
+
+socket.on("updateUsers", (users) => {
+    store.commit("setConnectedUsers", users);
 });
 
 // Handle the receiveMessage event inside the store

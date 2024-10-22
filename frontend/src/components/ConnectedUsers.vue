@@ -42,7 +42,7 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch('fetchConnectedUsers');
+        //this.$store.dispatch('fetchConnectedUsers');
     }
 };
 </script>

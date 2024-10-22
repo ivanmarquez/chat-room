@@ -58,7 +58,6 @@ PORT=5001
 MONGO_URI=mongodb://root:root@mongodb:27017/admin
 JWT_SECRET="d9D/nn9t2G4eX+V/a+9stGKKuWFapNpk8/WoJydDr+M="
 JWT_EXPIRES_IN=24h
-REDIS_URL=redis://default:root@redis:6379
 UPLOADS_DIR=/public/uploads
 UPLOADS_STATIC_DIR=/uploads
 ```
@@ -101,9 +100,9 @@ If you prefer to run the application without Docker, follow these steps:
 
 #### Backend Setup
 
-1. **Install MongoDB and Redis**:
+1. **Install MongoDB **:
    - Install [MongoDB](https://docs.mongodb.com/manual/installation/) and make sure it is running on the default port `27017`.
-   - Install [Redis](https://redis.io/download) and ensure it is running on the default port `6379`.
+
 
 2. **Install dependencies**:
 
@@ -142,7 +141,7 @@ If you prefer to run the application without Docker, follow these steps:
 ```bash
 chat-room/
 ├── backend/
-│   ├── config/               # Configs for database, redis and multer
+│   ├── config/               # Configs for database and multer
 │   ├── controllers/          # API controllers (auth, messages, users)
 │   ├── middlewares/          # Authorization with JWT
 │   ├── models/               # API models (message, user)

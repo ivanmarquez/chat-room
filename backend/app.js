@@ -3,7 +3,6 @@ const cors            = require("cors");
 const fs              = require('fs');
 const path            = require('path');
 const connectDB       = require("./config/db");
-const { redisClient } = require("./config/redis");
 const authRoutes      = require("./routes/authRoutes");
 const userRoutes      = require("./routes/userRoutes");
 const messageRoutes   = require("./routes/messageRoutes");
@@ -25,11 +24,7 @@ if (!fs.existsSync(uploadsDir)) {
 
 app.use(process.env.UPLOADS_STATIC_DIR, express.static(uploadsDir));
 
-
 connectDB().catch((error) => console.error("MongoDB connection error:", error));
-redisClient
-	.connect()
-	.catch((error) => console.error("Redis connection error:", error));
 
 swagger(app);
 
