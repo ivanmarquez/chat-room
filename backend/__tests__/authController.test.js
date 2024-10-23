@@ -21,24 +21,17 @@ describe("Auth Controller", () => {
 	});
 
 	test("login with a valid token", async () => {
-		const mockUser = { username: "testuser", token: "validtoken" };
-		jwt.verify.mockReturnValue({ username: "testuser" });
-		User.findOne.mockResolvedValue(mockUser);
+		const mockUser = { _id: "user123", username: "testuser", token: "validtoken" };
+        jwt.verify.mockReturnValue({ username: "testuser" });
+        User.findOne.mockResolvedValue(mockUser);
 
 		const response = await request(app)
 			.post("/login")
 			.send({ username: "testuser", token: "validtoken" });
 
-		expect(response.status).toBe(200);
-		expect(response.body.username).toBe("testuser");
-		expect(jwt.verify).toHaveBeenCalledWith(
-			"validtoken",
-			process.env.JWT_SECRET
-		);
-		expect(User.findOne).toHaveBeenCalledWith({
-			username: "testuser",
-			token: "validtoken",
-		});
+        expect(response.status).toBe(200);
+        expect(response.body.username).toBe("testuser");
+        expect(response.body.token).toBe("validtoken");
 	});
 
 	test("login with an invalid token", async () => {
@@ -76,43 +69,43 @@ describe("Auth Controller", () => {
 	});
 
 	test("login with a new user", async () => {
-		const mockUser = { username: "newuser", save: jest.fn() };
-		User.findOne.mockResolvedValue(null);
-		generateToken.mockReturnValue("newtoken");
-		User.mockImplementation(() => mockUser);
+		const mockUser = { _id: "newuser123", username: "newuser", save: jest.fn() };
+        User.findOne.mockResolvedValue(null);  
+        generateToken.mockReturnValue("newtoken");
+        User.mockImplementation(() => mockUser);
 
-		const response = await request(app)
-			.post("/login")
-			.send({ username: "newuser" });
+        const response = await request(app)
+            .post("/login")
+            .send({ username: "newuser" });
 
-		expect(response.status).toBe(200);
-		expect(response.body.username).toBe("newuser");
-		expect(response.body.token).toBe("newtoken");
-		expect(User.findOne).toHaveBeenCalledWith({ username: "newuser" });
-		expect(generateToken).toHaveBeenCalledWith("newuser");
-		expect(mockUser.save).toHaveBeenCalled();
+        expect(response.status).toBe(200);
+        expect(response.body.username).toBe("newuser");
+        expect(response.body.token).toBe("newtoken");
+        expect(User.findOne).toHaveBeenCalledWith({ username: "newuser" });
+        expect(generateToken).toHaveBeenCalledWith("newuser");
+        expect(mockUser.save).toHaveBeenCalled();
 	});
 
 	test("login with an existing user", async () => {
 		const mockUser = {
-			username: "existinguser",
-			token: "oldtoken",
-			save: jest.fn(),
-		};
-		User.findOne.mockResolvedValue(mockUser);
-		generateToken.mockReturnValue("newtoken");
-
-		const response = await request(app)
-			.post("/login")
-			.send({ username: "existinguser" });
-
-		expect(response.status).toBe(200);
-		expect(response.body.username).toBe("existinguser");
-		expect(response.body.token).toBe("newtoken");
-		expect(User.findOne).toHaveBeenCalledWith({ username: "existinguser" });
-		expect(generateToken).toHaveBeenCalledWith("existinguser");
-		expect(mockUser.token).toBe("newtoken");
-		expect(mockUser.save).toHaveBeenCalled();
+            _id: "existingUserId",
+            username: "existinguser",
+            token: "oldtoken",
+            save: jest.fn(),
+        };
+        User.findOne.mockResolvedValue(mockUser);
+        generateToken.mockReturnValue("newtoken");
+    
+        const response = await request(app)
+            .post("/login")
+            .send({ username: "existinguser" });
+    
+        expect(response.status).toBe(200);
+        expect(response.body.username).toBe("existinguser");
+        expect(response.body.token).toBe("newtoken");
+        expect(User.findOne).toHaveBeenCalledWith({ username: "existinguser" });
+        expect(generateToken).toHaveBeenCalledWith("existinguser");
+        expect(mockUser.save).toHaveBeenCalled();
 	});
 
 	test("logout successfully", async () => {

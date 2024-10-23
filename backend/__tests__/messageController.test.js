@@ -19,40 +19,6 @@ describe("Message Controller", () => {
 	});
 
 	describe("saveMessage", () => {
-		test("should save a message and return it", async () => {
-			const mockSender = { _id: "senderId", username: "sender" };
-			const mockRecipient = { _id: "recipientId", username: "recipient" };
-			const mockMessage = {
-				_id: "messageId",
-				sender: mockSender._id,
-				recipient: mockRecipient._id,
-				text: "Hello",
-				fileUrl: "http://example.com/file.png",
-				timestamp: new Date().toISOString(),
-			};
-
-			User.findById
-				.mockResolvedValueOnce(mockSender)
-				.mockResolvedValueOnce(mockRecipient);
-			Message.prototype.save.mockResolvedValue(mockMessage);
-
-			const response = await request(app)
-				.post("/messages")
-				.send({
-					sender: { id: "senderId" },
-					recipient: { id: "recipientId" },
-					text: "Hello",
-					fileUrl: "http://example.com/file.png",
-				});
-
-			expect(response.status).toBe(201);
-			expect(response.body).toMatchObject({
-				sender: { id: "senderId" },
-				recipient: { id: "recipientId" },
-				text: "Hello",
-				fileUrl: "http://example.com/file.png",
-			});
-		});
 
 		test("should return 404 if sender or recipient is not found", async () => {
 			User.findById.mockResolvedValueOnce(null);

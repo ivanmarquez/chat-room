@@ -138,9 +138,9 @@ const store = createStore({
 				});
 
 
-                if(store.user?.id){ 
+                /* if(store.user?.id){ 
                     localStorage.removeItem(store.user.id);
-                }
+                } */
 				//localStorage.removeItem("token");
 
 				commit("setUser", "");
@@ -367,10 +367,6 @@ socket.on("receiveMessage", (message) => {
 	) {
 		store.commit("addSendingUsers", message.sender.id);
 	}
-});
-
-socket.on("userDisconnected", () => {
-	store.commit("setAuthenticated", false);
 });
 
 export default store;

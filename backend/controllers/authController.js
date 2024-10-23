@@ -18,17 +18,15 @@ exports.login = async (req, res) => {
 					username: decoded.username,
 					token,
 				});
-
-				if (!user) {
-					return res.status(401).json({ message: "Invalid token" });
-				}
 			} catch (error) {
-				if (error instanceof jwt.JsonWebTokenError) {
+                if (error instanceof jwt.JsonWebTokenError) {
                     return res.status(401).json({ message: "Invalid token" });
                 }
                 throw error;
 			}
-		} else {
+		}
+
+		if (!user) {
 			// Si no existe el token, buscar al usuario por nombre de usuario
 			user = await User.findOne({ username });
 
@@ -45,18 +43,23 @@ exports.login = async (req, res) => {
 			}
 		}
 
+        if (!user || !user._id) {
+            return res.status(500).json({ message: "User creation or fetching failed" });
+        }
+
+
 		// Add the user to the connected users list
-		user = { id: user._id, username: user.username, token: newToken };
+		user = { id: user._id.toString(), username: user.username, token: newToken };
 		addUser(user);
 
 		res.json(user);
 	} catch (error) {
-        res.status(500).json({ message: "Internal Server Error" });
+		res.status(500).json({ message: "Internal Server Error" });
 	}
 };
 
 exports.logout = async (req, res) => {
 	const { user } = req.body;
-	//removeUser(user.id);
+	removeUser(user.id);
 	res.json({ message: "User logged out successfully" });
 };

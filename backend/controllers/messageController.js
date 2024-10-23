@@ -15,15 +15,15 @@ exports.saveMessage = async (req, res) => {
 		}
 
 		const message_save = new Message({
-			sender: senderUser._id,
-			recipient: recipientUser._id,
+			sender: senderUser._id.toString(),
+			recipient: recipientUser._id.toString(),
 			text: text,
 			fileUrl: fileUrl,
 		});
 		await message_save.save();
 
 		const message = {
-			id: message_save._id,
+			id: message_save._id.toString(),
 			sender: sender,
 			recipient: recipient,
 			text: text,
@@ -74,16 +74,16 @@ exports.getMessages = async (req, res) => {
 		// Transform the result to replace _id with id
 		const transformedMessages = messages.map((message) => {
 			return {
-				id: message._id,
+				id: message._id.toString(),
 				text: message.text,
                 fileUrl: message.fileUrl,
 				timestamp: message.timestamp,
 				sender: {
-					id: message.sender._id,
+					id: message.sender._id.toString(),
 					username: message.sender.username,
 				},
 				recipient: {
-					id: message.recipient._id,
+					id: message.recipient._id.toString(),
 					username: message.recipient.username,
 				},
 			};
