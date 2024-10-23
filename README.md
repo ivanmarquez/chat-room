@@ -5,7 +5,7 @@ A full-stack chat room application built with **Node.js**, **Express**, **MongoD
 
 ## Video de demostración
 
-[![>>>> VER VIDEO DE DEMOSTRACIÓN <<<<]](https://vimeo.com/1022560720?share=copy#t=0)
+[[>>>> VER VIDEO DE DEMOSTRACIÓN <<<<]](https://vimeo.com/1022560720?share=copy#t=0)
 
 
 ## Table of Contents
