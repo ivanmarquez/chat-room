@@ -3,9 +3,10 @@
 
 A full-stack chat room application built with **Node.js**, **Express**, **MongoDB**, and **Vue.js**. It supports real-time communication using **Socket.IO** and provides a RESTful API for managing chat history. This project is designed for seamless real-time chat functionalities with scalable backend services, featuring user authentication, message persistence, and state management.
 
+
 ## Video de demostración
 
-[[>>>> VER VIDEO DE DEMOSTRACIÓN <<<<]](https://vimeo.com/1022560720?share=copy#t=0)
+[![  >>>> VER VIDEO DE DEMOSTRACIÓN <<<<  ](https://i.vimeocdn.com/video/1941535849-a298c6b6966c34ba94a1abe2bee1caa906ac16242c513ffd8b46649a2f3832ec-d_295x166?r=pad)](https://vimeo.com/1022560720?share=copy#t=0)
 
 
 ## Table of Contents
