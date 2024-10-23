@@ -7,17 +7,19 @@ exports.login = async (req, res) => {
 	const { username, token } = req.body;
 
 	try {
-		let user;
+		let user = null;
 		let newToken = token;
 
 		if (token) {
 			try {
 				// Verificar el token y encontrar al usuario
 				const decoded = jwt.verify(token, process.env.JWT_SECRET);
-				user = await User.findOne({
-					username: decoded.username,
-					token,
-				});
+                if(decoded){
+                    user = await User.findOne({
+                        username: username,
+                        token,
+                    });
+                }
 			} catch (error) {
                 if (error instanceof jwt.JsonWebTokenError) {
                     return res.status(401).json({ message: "Invalid token" });
@@ -32,7 +34,7 @@ exports.login = async (req, res) => {
 
 			if (user) {
 				// Si el usuario ya existe, actualizar el token
-				newToken = generateToken(username);
+				newToken = generateToken(username); 
 				user.token = newToken;
 				await user.save();
 			} else {
@@ -46,7 +48,6 @@ exports.login = async (req, res) => {
         if (!user || !user._id) {
             return res.status(500).json({ message: "User creation or fetching failed" });
         }
-
 
 		// Add the user to the connected users list
 		user = { id: user._id.toString(), username: user.username, token: newToken };
